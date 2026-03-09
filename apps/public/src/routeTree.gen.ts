@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RegisterIndexRouteImport } from './routes/register/index'
+import { Route as ApplyIndexRouteImport } from './routes/apply/index'
+import { Route as AboutIndexRouteImport } from './routes/about/index'
 
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
@@ -28,34 +30,50 @@ const RegisterIndexRoute = RegisterIndexRouteImport.update({
   path: '/register/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApplyIndexRoute = ApplyIndexRouteImport.update({
+  id: '/apply/',
+  path: '/apply/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutIndexRoute = AboutIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AboutRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/about': typeof AboutRouteWithChildren
+  '/about/': typeof AboutIndexRoute
+  '/apply/': typeof ApplyIndexRoute
   '/register/': typeof RegisterIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/about': typeof AboutIndexRoute
+  '/apply': typeof ApplyIndexRoute
   '/register': typeof RegisterIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/about': typeof AboutRouteWithChildren
+  '/about/': typeof AboutIndexRoute
+  '/apply/': typeof ApplyIndexRoute
   '/register/': typeof RegisterIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/register/'
+  fullPaths: '/' | '/about' | '/about/' | '/apply/' | '/register/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/register'
-  id: '__root__' | '/' | '/about' | '/register/'
+  to: '/' | '/about' | '/apply' | '/register'
+  id: '__root__' | '/' | '/about' | '/about/' | '/apply/' | '/register/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
+  AboutRoute: typeof AboutRouteWithChildren
+  ApplyIndexRoute: typeof ApplyIndexRoute
   RegisterIndexRoute: typeof RegisterIndexRoute
 }
 
@@ -82,12 +100,37 @@ declare module '@tanstack/solid-router' {
       preLoaderRoute: typeof RegisterIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/apply/': {
+      id: '/apply/'
+      path: '/apply'
+      fullPath: '/apply/'
+      preLoaderRoute: typeof ApplyIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about/': {
+      id: '/about/'
+      path: '/'
+      fullPath: '/about/'
+      preLoaderRoute: typeof AboutIndexRouteImport
+      parentRoute: typeof AboutRoute
+    }
   }
 }
 
+interface AboutRouteChildren {
+  AboutIndexRoute: typeof AboutIndexRoute
+}
+
+const AboutRouteChildren: AboutRouteChildren = {
+  AboutIndexRoute: AboutIndexRoute,
+}
+
+const AboutRouteWithChildren = AboutRoute._addFileChildren(AboutRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
+  AboutRoute: AboutRouteWithChildren,
+  ApplyIndexRoute: ApplyIndexRoute,
   RegisterIndexRoute: RegisterIndexRoute,
 }
 export const routeTree = rootRouteImport

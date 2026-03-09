@@ -1,27 +1,27 @@
 import { createRootRoute, Outlet } from '@tanstack/solid-router'
-import appCss from '../styles.css?url'
 import { SiteHeader } from '@ardtire/ui'
-import { NAV_PUBLIC } from '@ardtire/ui'
 
 export const Route = createRootRoute({
-  head: () => ({
-    links: [{ rel: 'stylesheet', href: appCss }],
-  }),
   component: Root,
 })
 
 function Root() {
   return (
-    <>
+    <div class="min-h-dvh bg-zinc-950 text-zinc-50">
       <SiteHeader
-        mode="public"
-        nav={NAV_PUBLIC}
-        right={{
-          signedIn: false,
-          onSignIn: () => (window.location.href = 'http://localhost:3001/'),
-        }}
+        title="Ardtire Society"
+        items={[
+          { label: 'About', href: '/about' },
+          { label: 'Register', href: '/register' },
+          { label: 'Membership', href: '/apply' },
+        ]}
       />
       <Outlet />
-    </>
+      <footer class="border-t border-zinc-800">
+        <div class="mx-auto max-w-5xl px-6 py-10 text-sm text-zinc-400">
+          © {new Date().getFullYear()} Ardtire Society
+        </div>
+      </footer>
+    </div>
   )
 }

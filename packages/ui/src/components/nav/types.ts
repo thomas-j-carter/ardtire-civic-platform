@@ -1,4 +1,4 @@
-export type NavVisibility = 'public' | 'member' | 'admin'
+export type NavVisibility = 'public' | 'member' | 'admin' | 'internal'
 
 export type NavItem = {
   label: string
@@ -8,20 +8,16 @@ export type NavItem = {
   children?: NavItem[]
 }
 
-export function visibleTo(item: NavItem, mode: NavVisibility) {
-  const v = item.visibility ?? 'public'
-  if (v === 'public') return true
-  if (v === 'member') return mode === 'member' || mode === 'admin'
-  if (v === 'admin') return mode === 'admin'
-  return false
-}
-
-export function filterNav(items: NavItem[], mode: NavVisibility): NavItem[] {
-  return items
-    .filter((i) => visibleTo(i, mode))
-    .map((i) => ({
-      ...i,
-      children: i.children ? filterNav(i.children, mode) : undefined,
-    }))
-    .filter((i) => (i.children ? i.children.length > 0 || i.href : true))
+// Normalize items so we never set optional props to `undefined` under exactOptionalPropertyTypes.
+export function normalizeNavItems(items: NavItem[]): NavItem[] {
+  return items.map((it) => {
+    const base: NavItem = {
+      label: it.label,
+      ...(it.href ? { href: it.href } : {}),
+      ...(it.description ? { description: it.description } : {}),
+      ...(it.visibility ? { visibility: it.visibility } : {}),
+      ...(it.children && it.children.length > 0 ? { children: normalizeNavItems(it.children) } : {}),
+    }
+    return base
+  })
 }

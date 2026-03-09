@@ -7,19 +7,20 @@ export const Route = createFileRoute('/')({
 
 function Home() {
   return (
-    <main class="min-h-dvh bg-zinc-950 text-zinc-50">
-      <div class="mx-auto max-w-5xl px-6 py-16">
-        <header class="space-y-4">
-          <p class="text-xs uppercase tracking-[0.2em] text-zinc-400">Ardtire Society</p>
-          <h1 class="text-4xl font-semibold tracking-tight">Ardtire Civic Platform</h1>
-          <p class="max-w-2xl text-zinc-300">Public surface (SSR-ready). Foundation scaffold.</p>
-        </header>
+    <main class="mx-auto max-w-5xl px-6 py-16">
+      <header class="space-y-4">
+        <p class="text-xs uppercase tracking-[0.2em] text-zinc-400">Official Public Site</p>
+        <h1 class="text-4xl font-semibold tracking-tight">Ardtire Civic Platform</h1>
+        <p class="max-w-2xl text-zinc-300">
+          A unified civic operating system for publication, membership, and governance.
+        </p>
+      </header>
 
-        <section class="mt-10 flex flex-wrap gap-3">
-          <Button variant="default">Continue</Button>
-          <Button variant="ghost" onClick={() => (window.location.href = '/register')}>View Register</Button>
-        </section>
-      </div>
+      <section class="mt-10 flex flex-wrap gap-3">
+        <Button variant="default" onClick={() => (window.location.href = '/apply')}>Apply</Button>
+        <Button variant="outline" onClick={() => (window.location.href = '/about')}>About</Button>
+        <Button variant="ghost" onClick={() => (window.location.href = '/register')}>View Register</Button>
+      </section>
     </main>
   )
 }
