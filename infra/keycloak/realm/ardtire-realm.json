@@ -20,14 +20,30 @@
   },
   "roles": {
     "realm": [
-      { "name": "crown" },
-      { "name": "admin" },
-      { "name": "editor" },
-      { "name": "officer" },
-      { "name": "founding-member" },
-      { "name": "member" },
-      { "name": "associate" },
-      { "name": "public" }
+      {
+        "name": "crown"
+      },
+      {
+        "name": "admin"
+      },
+      {
+        "name": "editor"
+      },
+      {
+        "name": "officer"
+      },
+      {
+        "name": "founding-member"
+      },
+      {
+        "name": "member"
+      },
+      {
+        "name": "associate"
+      },
+      {
+        "name": "public"
+      }
     ]
   },
   "clients": [

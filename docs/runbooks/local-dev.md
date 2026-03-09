@@ -32,3 +32,9 @@ This will:
 
 * `/auth/whoami` now verifies JWT signature using Keycloak JWKS (issuer-based).
 * Audience/client enforcement is a later hardening step.
+
+## Pinned dev ports
+- Public: http://localhost:3000
+- Portal: http://localhost:3001
+- Admin: http://localhost:3002
+- Platform API: http://localhost:8080
