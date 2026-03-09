@@ -1,0 +1,13 @@
+# CODEOWNERS
+# Institutional control: require review from designated maintainers/owners.
+# Update this file once your GitHub usernames/team slugs are known.
+
+* @REPLACE_WITH_GITHUB_USERNAME_OR_TEAM
+
+# High-impact areas require explicit review (replace with actual owners).
+/docs/adr/ @REPLACE_WITH_GITHUB_USERNAME_OR_TEAM
+/infra/ @REPLACE_WITH_GITHUB_USERNAME_OR_TEAM
+/services/api/ @REPLACE_WITH_GITHUB_USERNAME_OR_TEAM
+/services/decidim-proxy/ @REPLACE_WITH_GITHUB_USERNAME_OR_TEAM
+/infra/keycloak/ @REPLACE_WITH_GITHUB_USERNAME_OR_TEAM
+/openapi/ @REPLACE_WITH_GITHUB_USERNAME_OR_TEAM
