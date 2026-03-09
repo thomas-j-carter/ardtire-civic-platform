@@ -1,0 +1,103 @@
+{
+  "realm": "ardtire",
+  "enabled": true,
+  "displayName": "Ardtire",
+  "registrationAllowed": false,
+  "resetPasswordAllowed": true,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "rememberMe": true,
+  "verifyEmail": false,
+  "smtpServer": {
+    "host": "mailpit",
+    "port": "1025",
+    "from": "no-reply@ardtire.org",
+    "fromDisplayName": "Ardtire Society",
+    "replyTo": "no-reply@ardtire.org",
+    "replyToDisplayName": "Ardtire Society",
+    "ssl": "false",
+    "starttls": "false"
+  },
+  "roles": {
+    "realm": [
+      { "name": "crown" },
+      { "name": "admin" },
+      { "name": "editor" },
+      { "name": "officer" },
+      { "name": "founding-member" },
+      { "name": "member" },
+      { "name": "associate" },
+      { "name": "public" }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "public",
+      "name": "Ardtire Public",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "rootUrl": "http://localhost:3000",
+      "baseUrl": "/",
+      "redirectUris": [
+        "http://localhost:3000/*"
+      ],
+      "webOrigins": [
+        "http://localhost:3000"
+      ]
+    },
+    {
+      "clientId": "portal",
+      "name": "Ardtire Portal",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "rootUrl": "http://localhost:3001",
+      "baseUrl": "/",
+      "redirectUris": [
+        "http://localhost:3001/*"
+      ],
+      "webOrigins": [
+        "http://localhost:3001"
+      ]
+    },
+    {
+      "clientId": "admin",
+      "name": "Ardtire Admin",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "rootUrl": "http://localhost:3002",
+      "baseUrl": "/",
+      "redirectUris": [
+        "http://localhost:3002/*"
+      ],
+      "webOrigins": [
+        "http://localhost:3002"
+      ]
+    },
+    {
+      "clientId": "api",
+      "name": "Ardtire Platform API",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "serviceAccountsEnabled": false,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "redirectUris": [
+        "http://localhost:8080/*"
+      ],
+      "webOrigins": [
+        "http://localhost:8080"
+      ],
+      "secret": "dev_api_client_secret_change_me"
+    }
+  ]
+}

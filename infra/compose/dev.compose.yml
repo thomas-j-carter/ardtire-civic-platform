@@ -21,21 +21,50 @@ services:
       timeout: 5s
       retries: 20
 
+  keycloak-db:
+    image: postgres:16
+    container_name: ardtire-keycloak-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak_dev_password_change_me
+    ports:
+      - "5433:5432"
+    volumes:
+      - ardtire_keycloak_db_data:/var/lib/postgresql/data
+    networks:
+      - ardtire_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U keycloak -d keycloak"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
   keycloak:
     image: quay.io/keycloak/keycloak:26.0
     container_name: ardtire-keycloak
     restart: unless-stopped
-    command: ["start-dev"]
+    depends_on:
+      keycloak-db:
+        condition: service_healthy
+    command: ["start-dev", "--import-realm"]
     environment:
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin_dev_password_change_me}
       KC_HTTP_ENABLED: "true"
       KC_HOSTNAME_STRICT: "false"
       KC_PROXY_HEADERS: "xforwarded"
-      # Use Postgres in later step; start with embedded H2 for dev simplicity in Step 9.
-      # In Step 10 we will switch Keycloak to Postgres for production-shaped parity.
+
+      KC_DB: postgres
+      KC_DB_URL_HOST: keycloak-db
+      KC_DB_URL_DATABASE: keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloak_dev_password_change_me
     ports:
       - "${KEYCLOAK_PORT:-8090}:8080"
+    volumes:
+      - ../keycloak/realm:/opt/keycloak/data/import:ro
     networks:
       - ardtire_net
     healthcheck:
@@ -79,4 +108,5 @@ networks:
 
 volumes:
   ardtire_postgres_data:
+  ardtire_keycloak_db_data:
   ardtire_meili_data:
