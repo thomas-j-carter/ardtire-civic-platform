@@ -21,7 +21,7 @@ function Home() {
         <section class="mt-10 flex flex-wrap gap-3">
           <Button variant="default">Continue</Button>
           <Button variant="outline">Review</Button>
-          <Button variant="ghost">View Register</Button>
+          <Button variant="ghost" onClick={() => (window.location.href = '/register')}>View Register</Button>
         </section>
       </div>
     </main>
