@@ -67,6 +67,9 @@ importers:
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
+      vinxi:
+        specifier: ^0.5.11
+        version: 0.5.11(@types/node@25.3.5)(db0@0.3.4(drizzle-orm@0.44.7(@opentelemetry/api@1.9.0)(@types/pg@8.18.0)(gel@2.2.0)(pg@8.20.0)))(drizzle-orm@0.44.7(@opentelemetry/api@1.9.0)(@types/pg@8.18.0)(gel@2.2.0)(pg@8.20.0))(ioredis@5.10.0)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2)
       vite:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@25.3.5)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2)
@@ -147,6 +150,9 @@ importers:
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
+      vinxi:
+        specifier: ^0.5.11
+        version: 0.5.11(@types/node@25.3.5)(db0@0.3.4(drizzle-orm@0.44.7(@opentelemetry/api@1.9.0)(@types/pg@8.18.0)(gel@2.2.0)(pg@8.20.0)))(drizzle-orm@0.44.7(@opentelemetry/api@1.9.0)(@types/pg@8.18.0)(gel@2.2.0)(pg@8.20.0))(ioredis@5.10.0)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2)
       vite:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@25.3.5)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2)
@@ -199,6 +205,9 @@ importers:
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
+      vinxi:
+        specifier: ^0.5.11
+        version: 0.5.11(@types/node@25.3.5)(db0@0.3.4(drizzle-orm@0.44.7(@opentelemetry/api@1.9.0)(@types/pg@8.18.0)(gel@2.2.0)(pg@8.20.0)))(drizzle-orm@0.44.7(@opentelemetry/api@1.9.0)(@types/pg@8.18.0)(gel@2.2.0)(pg@8.20.0))(ioredis@5.10.0)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2)
       vite:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@25.3.5)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2)
