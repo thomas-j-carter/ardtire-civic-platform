@@ -1,0 +1,25 @@
+{
+  "name": "@ardtire/cms",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development payload dev",
+    "build": "payload build",
+    "start": "cross-env NODE_ENV=production payload start",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "biome lint ."
+  },
+  "dependencies": {
+    "payload": "^3.0.0",
+    "@payloadcms/db-postgres": "^3.0.0",
+    "express": "^4.19.2",
+    "cross-env": "^7.0.3",
+    "dotenv": "^17.3.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^25.0.0",
+    "typescript": "^5.0.0"
+  }
+}

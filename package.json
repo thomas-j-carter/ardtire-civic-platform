@@ -27,7 +27,8 @@
     "dev:portal": "pnpm -C apps/portal dev",
     "dev:admin": "pnpm -C apps/admin dev",
     "db:migrate": "pnpm -C packages/db db:migrate",
-    "db:seed": "pnpm -C packages/db db:seed"
+    "db:seed": "pnpm -C packages/db db:seed",
+    "dev:cms": "pnpm -C apps/cms dev"
   },
   "devDependencies": {
     "biome": "^0.3.3",
