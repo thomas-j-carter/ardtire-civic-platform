@@ -10,7 +10,7 @@ async function fetchRegister(): Promise<RegisterListResponse> {
   return (await res.json()) as RegisterListResponse
 }
 
-export const Route = createFileRoute('/register')({ component: RegisterPage })
+export const Route = createFileRoute('/register/')({ component: RegisterPage })
 
 function RegisterPage() {
   const [data] = createResource(fetchRegister)

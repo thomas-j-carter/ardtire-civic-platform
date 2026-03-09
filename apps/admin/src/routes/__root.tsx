@@ -12,10 +12,11 @@ import { Suspense } from 'solid-js'
 import Header from '../components/Header'
 
 import styleCss from '../styles.css?url'
+import appCss from '../styles.css?url'
 
 export const Route = createRootRouteWithContext()({
   head: () => ({
-    links: [{ rel: 'stylesheet', href: styleCss }],
+    links: [{ rel: 'stylesheet', href: appCss }, { rel: 'stylesheet', href: styleCss }],
   }),
   shellComponent: RootComponent,
 })
