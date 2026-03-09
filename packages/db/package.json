@@ -11,6 +11,7 @@
     "test": "echo \"no tests yet (db scaffold)\""
   },
   "dependencies": {
+    "dotenv": "^17.3.1",
     "drizzle-orm": "^0.44.0",
     "pg": "^8.13.0"
   },
