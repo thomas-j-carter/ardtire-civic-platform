@@ -16,6 +16,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
+    "@ardtire/ui": "workspace:*",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/router-plugin": "^1.133.21",
     "@tanstack/solid-router": "latest",
@@ -24,12 +25,12 @@
     "@tanstack/solid-start": "latest",
     "solid-js": "^1.9.11",
     "tailwindcss": "^4.1.18",
-    "vite-tsconfig-paths": "^5.1.4",
-    "@ardtire/ui": "workspace:*"
+    "vite-tsconfig-paths": "^5.1.4"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.5",
     "@tanstack/devtools-vite": "latest",
+    "@tanstack/router-cli": "^1.166.2",
     "typescript": "^5.7.2",
     "vite": "^7.3.1",
     "vite-plugin-solid": "^2.11.10"

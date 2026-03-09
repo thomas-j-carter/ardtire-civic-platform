@@ -61,6 +61,9 @@ importers:
       '@tanstack/devtools-vite':
         specifier: latest
         version: 0.5.3(vite@7.3.1(@types/node@25.3.5)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
+      '@tanstack/router-cli':
+        specifier: ^1.166.2
+        version: 1.166.2
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -110,6 +113,9 @@ importers:
       '@tanstack/devtools-vite':
         specifier: latest
         version: 0.5.3(vite@7.3.1(@types/node@25.3.5)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
+      '@tanstack/router-cli':
+        specifier: ^1.166.2
+        version: 1.166.2
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -159,6 +165,9 @@ importers:
       '@tanstack/devtools-vite':
         specifier: latest
         version: 0.5.3(vite@7.3.1(@types/node@25.3.5)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
+      '@tanstack/router-cli':
+        specifier: ^1.166.2
+        version: 1.166.2
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -1916,6 +1925,11 @@ packages:
 
   '@tanstack/query-core@5.90.20':
     resolution: {integrity: sha512-OMD2HLpNouXEfZJWcKeVKUgQ5n+n3A2JFmBaScpNDUqSrQSjiveC7dKMe53uJUg1nDG16ttFPz2xfilz6i2uVg==}
+
+  '@tanstack/router-cli@1.166.2':
+    resolution: {integrity: sha512-pNEekwultE/jP1/aRLUlUCJWYmJaWT4BUBZOtxOgDtIZHaW8f1Ta6Opt2Ao2njBzADw7tAdQGMgFltBJVEevzQ==}
+    engines: {node: '>=20.19'}
+    hasBin: true
 
   '@tanstack/router-core@1.166.2':
     resolution: {integrity: sha512-zn3NhENOAX9ToQiX077UV2OH3aJKOvV2ZMNZZxZ3gDG3i3WqL8NfWfEgetEAfMN37/Mnt90PpotYgf7IyuoKqQ==}
@@ -6566,6 +6580,14 @@ snapshots:
 
   '@tanstack/query-core@5.90.20': {}
 
+  '@tanstack/router-cli@1.166.2':
+    dependencies:
+      '@tanstack/router-generator': 1.166.2
+      chokidar: 3.6.0
+      yargs: 17.7.2
+    transitivePeerDependencies:
+      - supports-color
+
   '@tanstack/router-core@1.166.2':
     dependencies:
       '@tanstack/history': 1.161.4
@@ -8734,7 +8756,7 @@ snapshots:
       oas-kit-common: 1.0.8
       reftools: 1.1.9
       yaml: 1.10.2
-      yargs: 17.0.1
+      yargs: 17.7.2
 
   oas-schema-walker@1.1.5: {}
 
@@ -9595,7 +9617,7 @@ snapshots:
       oas-validator: 5.0.8
       reftools: 1.1.9
       yaml: 1.10.2
-      yargs: 17.0.1
+      yargs: 17.7.2
     transitivePeerDependencies:
       - encoding
 
