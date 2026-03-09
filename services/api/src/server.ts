@@ -3,7 +3,7 @@ import { serve } from '@hono/node-server'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { decodeJwt } from 'jose'
+import { verifyAccessToken } from './auth'
 
 const app = new Hono()
 
@@ -102,28 +102,34 @@ app.delete('/auth/session', (c) => {
 })
 
 // GET /auth/whoami: reads cookie, decodes JWT claims (no signature verify yet: scaffold)
-app.get('/auth/whoami', (c) => {
-  const origin = cors(c.req.header('origin') ?? null)
-  if (origin) {
-    c.header('Access-Control-Allow-Origin', origin)
-    c.header('Access-Control-Allow-Credentials', 'true')
-    c.header('Vary', 'Origin')
-  }
+app.get('/auth/whoami', async (c) => {
+const origin = cors(c.req.header('origin') ?? null)
+if (origin) {
+c.header('Access-Control-Allow-Origin', origin)
+c.header('Access-Control-Allow-Credentials', 'true')
+c.header('Vary', 'Origin')
+}
 
-  const token = readCookie(c.req.raw)
-  if (!token) return c.json({ error: 'unauthorized' }, 401)
+const token = readCookie(c.req.raw)
+if (!token) return c.json({ error: 'unauthorized' }, 401)
 
-  const claims = decodeJwt(token) as any
-  const roles = (claims?.realm_access?.roles ?? []).filter((r: string) =>
-    ['crown', 'admin', 'editor', 'officer', 'founding-member', 'member', 'associate', 'public'].includes(r),
-  )
+let claims: any
+try {
+claims = await verifyAccessToken(token)
+} catch {
+return c.json({ error: 'unauthorized' }, 401)
+}
 
-  return c.json({
-    sub: claims.sub,
-    preferred_username: claims.preferred_username ?? null,
-    email: claims.email ?? null,
-    roles,
-  })
+const roles = (claims?.realm_access?.roles ?? []).filter((r: string) =>
+['crown', 'admin', 'editor', 'officer', 'founding-member', 'member', 'associate', 'public'].includes(r),
+)
+
+return c.json({
+sub: claims.sub,
+preferred_username: claims.preferred_username ?? null,
+email: claims.email ?? null,
+roles,
+})
 })
 
 const port = Number(process.env.API_PORT ?? '8080')
