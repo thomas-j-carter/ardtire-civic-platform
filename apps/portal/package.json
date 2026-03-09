@@ -25,7 +25,8 @@
     "solid-js": "^1.9.11",
     "tailwindcss": "^4.1.18",
     "vite-tsconfig-paths": "^5.1.4",
-    "@ardtire/ui": "workspace:*"
+    "@ardtire/ui": "workspace:*",
+    "@ardtire/auth": "workspace:*"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.5",
@@ -34,12 +35,6 @@
     "vite": "^7.3.1",
     "vite-plugin-solid": "^2.11.10",
     "@tanstack/router-cli": "^1.166.2"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "lightningcss"
-    ]
   },
   "version": "0.0.0"
 }
