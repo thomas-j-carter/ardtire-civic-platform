@@ -1,19 +1,8 @@
 import { createFileRoute } from '@tanstack/solid-router'
 import { createResource, For, Show } from 'solid-js'
 
-type RegisterEntry = {
-  id: string
-  timestamp: string
-  type: string
-  visibility: string
-  title: string | null
-  summary: string | null
-}
-
-type RegisterListResponse = {
-  items: RegisterEntry[]
-  nextCursor: string | null
-}
+type RegisterEntry = { id: string; timestamp: string; type: string; visibility: string; title: string | null; summary: string | null }
+type RegisterListResponse = { items: RegisterEntry[]; nextCursor: string | null }
 
 async function fetchRegister(): Promise<RegisterListResponse> {
   const res = await fetch('http://localhost:8080/register/entries')
@@ -21,22 +10,16 @@ async function fetchRegister(): Promise<RegisterListResponse> {
   return (await res.json()) as RegisterListResponse
 }
 
-export const Route = createFileRoute('/register/')({
-  component: RegisterPage,
-})
+export const Route = createFileRoute('/register')({ component: RegisterPage })
 
 function RegisterPage() {
   const [data] = createResource(fetchRegister)
-
   return (
     <main class="min-h-dvh bg-zinc-950 text-zinc-50">
       <div class="mx-auto max-w-5xl px-6 py-16 space-y-10">
         <header class="space-y-3">
           <p class="text-xs uppercase tracking-[0.2em] text-zinc-400">Public Register</p>
           <h1 class="text-4xl font-semibold tracking-tight">Register</h1>
-          <p class="max-w-2xl text-zinc-300">
-            Immutable public ledger of official acts and outcomes.
-          </p>
         </header>
 
         <Show when={!data.loading} fallback={<p class="text-zinc-300">Loading…</p>}>
@@ -49,13 +32,9 @@ function RegisterPage() {
                     <time class="text-xs text-zinc-400">{new Date(item.timestamp).toLocaleString()}</time>
                   </div>
                   <p class="mt-2 text-sm text-zinc-300">{item.summary ?? ''}</p>
-                  <p class="mt-3 text-xs text-zinc-500">type: {item.type} · visibility: {item.visibility}</p>
                 </article>
               )}
             </For>
-            <Show when={(data()?.items?.length ?? 0) === 0}>
-              <p class="text-zinc-300">No register entries found.</p>
-            </Show>
           </div>
         </Show>
       </div>

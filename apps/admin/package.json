@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "pnpm -s routes:watch & PORT=3002 pnpm -s start",
+    "dev": "pnpm -s routes:watch & vite dev --host 127.0.0.1 --port 3002 --strictPort",
     "build": "vite build",
     "start": "node .output/server/index.mjs",
     "preview": "vite preview",
@@ -13,7 +13,7 @@
     "check": "biome check",
     "routes:gen": "tsr generate",
     "routes:watch": "tsr watch",
-    "typecheck": "pnpm -s routes:gen && tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
@@ -25,16 +25,20 @@
     "solid-js": "^1.9.11",
     "tailwindcss": "^4.1.18",
     "vite-tsconfig-paths": "^5.1.4",
-    "@ardtire/ui": "workspace:*",
-    "@ardtire/auth": "workspace:*"
+    "@ardtire/ui": "workspace:*"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.5",
     "@tanstack/devtools-vite": "latest",
     "typescript": "^5.7.2",
     "vite": "^7.3.1",
-    "vite-plugin-solid": "^2.11.10",
-    "@tanstack/router-cli": "^1.166.2"
+    "vite-plugin-solid": "^2.11.10"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "lightningcss"
+    ]
   },
   "version": "0.0.0"
 }
