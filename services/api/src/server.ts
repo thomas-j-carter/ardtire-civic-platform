@@ -4,6 +4,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { verifyAccessToken } from './auth'
+import { listRegisterEntries, createRegisterEntry } from './register'
 
 const app = new Hono()
 
@@ -136,6 +137,59 @@ preferred_username: claims.preferred_username ?? null,
 email: claims.email ?? null,
 roles,
 })
+})
+
+
+app.get('/register/entries', async (c) => {
+  const origin = cors(c.req.header('origin') ?? null)
+  if (origin) {
+    c.header('Access-Control-Allow-Origin', origin)
+    c.header('Access-Control-Allow-Credentials', 'true')
+    c.header('Vary', 'Origin')
+  }
+
+  const cursor = c.req.query('cursor') ?? null
+  const limitRaw = c.req.query('limit')
+  const limit = limitRaw ? Number(limitRaw) : 25
+
+  const data = await listRegisterEntries(cursor, Number.isFinite(limit) ? limit : 25)
+  return c.json(data)
+})
+
+app.post('/register/entries', async (c) => {
+  const origin = cors(c.req.header('origin') ?? null)
+  if (origin) {
+    c.header('Access-Control-Allow-Origin', origin)
+    c.header('Access-Control-Allow-Credentials', 'true')
+    c.header('Vary', 'Origin')
+  }
+
+  // Use whoami to derive actor
+  const token = readCookie(c.req.raw)
+  if (!token) return c.json({ error: 'unauthorized' }, 401)
+
+  let claims: any
+  try {
+    claims = await verifyAccessToken(token)
+  } catch {
+    return c.json({ error: 'unauthorized' }, 401)
+  }
+  const roles = (claims?.realm_access?.roles ?? []).filter((r: string) =>
+    ['crown', 'admin', 'editor', 'officer', 'founding-member', 'member', 'associate', 'public'].includes(r),
+  )
+  const actor = { sub: String(claims.sub), roles }
+
+  const body = await c.req.json().catch(() => null)
+
+  try {
+    const created = await createRegisterEntry(body, actor)
+    return c.json(created, 201)
+  } catch (e) {
+    const status = (e && typeof e === 'object' && 'status' in e) ? e.status : 500
+    if (status === 400) return c.json({ error: 'bad_request' }, 400)
+    if (status === 403) return c.json({ error: 'forbidden' }, 403)
+    return c.json({ error: 'internal' }, 500)
+  }
 })
 
 const port = Number(process.env.API_PORT ?? '8080')

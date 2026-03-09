@@ -1,0 +1,26 @@
+{
+  "name": "@ardtire/db",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "node ./src/migrate.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "biome lint .",
+    "test": "echo \"no tests yet (db scaffold)\""
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.44.0",
+    "pg": "^8.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.0",
+    "@types/pg": "^8.11.10",
+    "drizzle-kit": "^0.30.0",
+    "typescript": "^5.0.0"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}
