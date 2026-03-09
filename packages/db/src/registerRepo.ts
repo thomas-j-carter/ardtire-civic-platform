@@ -1,6 +1,6 @@
 import { desc, lt } from 'drizzle-orm'
-import { createDb } from './db'
-import { auditEvent, registerEntry } from './schema'
+import { createDb } from './db.js'
+import { auditEvent, registerEntry } from './schema.js'
 
 type WhoAmI = { sub: string; roles: string[] } | null
 
