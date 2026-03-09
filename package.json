@@ -27,7 +27,7 @@
     "dev:portal": "pnpm -C apps/portal dev",
     "dev:admin": "pnpm -C apps/admin dev",
     "db:migrate": "pnpm -C packages/db db:migrate",
-    "db:seed": "node infra/scripts/seed-register.mjs"
+    "db:seed": "pnpm -C packages/db db:seed"
   },
   "devDependencies": {
     "biome": "^0.3.3",

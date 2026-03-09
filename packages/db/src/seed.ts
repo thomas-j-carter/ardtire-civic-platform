@@ -1,14 +1,17 @@
+import 'dotenv/config'
 import pg from 'pg'
 
-const url = process.env.DATABASE_URL || 'postgres://ardtire:ardtire_dev_password_change_me@localhost:5432/ardtire'
-const pool = new pg.Pool({ connectionString: url })
-
 async function main() {
-  // Insert a single seed entry if none exist
+  const url = process.env.DATABASE_URL
+  if (!url) throw new Error('DATABASE_URL is required')
+
+  const pool = new pg.Pool({ connectionString: url })
+
   const { rows } = await pool.query('select count(*)::int as c from register_entry')
   const count = rows[0]?.c ?? 0
   if (count > 0) {
     console.log('[seed] register_entry already has rows; skipping seed')
+    await pool.end()
     return
   }
 
@@ -33,13 +36,10 @@ async function main() {
   )
 
   console.log('[seed] inserted initial register_entry + audit_event')
+  await pool.end()
 }
 
-main()
-  .catch((e) => {
-    console.error(e)
-    process.exit(1)
-  })
-  .finally(async () => {
-    await pool.end()
-  })
+main().catch((e) => {
+  console.error(e)
+  process.exit(1)
+})
