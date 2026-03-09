@@ -1,0 +1,31 @@
+{
+  "name": "@ardtire/storybook",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build": "storybook build",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "biome lint .",
+    "test": "echo \"no tests yet (storybook scaffold)\""
+  },
+  "dependencies": {
+    "@ardtire/ui": "workspace:*",
+    "solid-js": "^1.9.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "^10.2.16",
+    "@storybook/addon-docs": "^10.2.16",
+    "@storybook/addon-links": "^10.2.16",
+    "@storybook/addon-vitest": "^10.2.16",
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/node": "^25.3.5",
+    "storybook": "^10.2.16",
+    "storybook-solidjs-vite": "^10.0.9",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.0.0",
+    "vite": "^6.0.0",
+    "vite-plugin-solid": "^2.11.0"
+  }
+}

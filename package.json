@@ -16,7 +16,9 @@
     "lint:biome": "biome lint .",
     "lint:biome:fix": "biome lint . --write",
     "check": "pnpm -s format:check && pnpm -s lint && pnpm -s typecheck && pnpm -s test",
-    "test": "turbo test"
+    "test": "turbo test",
+    "storybook": "pnpm -C apps/storybook storybook",
+    "storybook:build": "pnpm -C apps/storybook build"
   },
   "devDependencies": {
     "biome": "^0.3.3",
