@@ -1,5 +1,7 @@
 import { createRootRoute, Outlet } from '@tanstack/solid-router'
 import appCss from '../styles.css?url'
+import { SiteHeader } from '@ardtire/ui'
+import { NAV_PUBLIC } from '@ardtire/ui'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -9,5 +11,17 @@ export const Route = createRootRoute({
 })
 
 function Root() {
-  return <Outlet />
+  return (
+    <>
+      <SiteHeader
+        mode="public"
+        nav={NAV_PUBLIC}
+        right={{
+          signedIn: false,
+          onSignIn: () => (window.location.href = 'http://localhost:3001/'),
+        }}
+      />
+      <Outlet />
+    </>
+  )
 }
