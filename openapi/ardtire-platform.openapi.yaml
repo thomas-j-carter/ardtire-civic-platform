@@ -1,0 +1,248 @@
+openapi: 3.1.0
+info:
+  title: Ardtire Civic Platform API
+  version: 0.1.0
+  license:
+    name: UNLICENSED
+  description: >
+    Canonical contract for the Ardtire Civic Platform. This specification is the source of truth
+    for the platform boundary. Frontends and services should conform to this contract.
+  contact:
+    name: Platform Maintainers
+
+servers:
+  - url: https://api.ardtire.org
+    description: Production
+  - url: https://staging-api.ardtire.org
+    description: Staging
+  - url: http://localhost:8080
+    description: Local development
+
+tags:
+  - name: system
+    description: Platform system endpoints
+  - name: register
+    description: Public Register (official ledger of acts)
+
+components:
+  securitySchemes:
+    keycloakOidc:
+      type: oauth2
+      description: Keycloak OIDC (authorizationCode). URLs are placeholders until Keycloak is configured.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://id.ardtire.org/realms/ardtire/protocol/openid-connect/auth
+          tokenUrl: https://id.ardtire.org/realms/ardtire/protocol/openid-connect/token
+          scopes:
+            openid: OpenID Connect scope
+            profile: Basic profile scope
+
+  schemas:
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+          examples: [BAD_REQUEST, UNAUTHORIZED, FORBIDDEN, NOT_FOUND, INTERNAL]
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
+
+    Health:
+      type: object
+      required: [status, service, time]
+      properties:
+        status:
+          type: string
+          enum: [ok]
+        service:
+          type: string
+          examples: [api]
+        time:
+          type: string
+          format: date-time
+
+    RegisterEntry:
+      type: object
+      description: Immutable official ledger entry (public register).
+      required: [id, timestamp, type, visibility]
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the register entry.
+        timestamp:
+          type: string
+          format: date-time
+        type:
+          type: string
+          description: Entry type (e.g., GOVERNANCE_OUTCOME, SEALED_INSTRUMENT, POLICY_CHANGE).
+        visibility:
+          type: string
+          enum: [public, member, confidential]
+        title:
+          type: [string, "null"]
+        summary:
+          type: [string, "null"]
+        references:
+          type: array
+          items:
+            type: object
+            required: [kind, ref]
+            properties:
+              kind:
+                type: string
+                description: Kind of reference (e.g., decidim, document, vote, membership).
+              ref:
+                type: string
+                description: Canonical reference string / external ID.
+        authority:
+          type: ["object", "null"]
+          properties:
+            role:
+              type: string
+              description: Authority role that issued/published the act (e.g., crown, admin).
+            subject:
+              type: [string, "null"]
+              description: Human-readable authority subject (optional).
+        audit:
+          type: ["object", "null"]
+          description: Optional audit metadata (hash/signature fields can be added later).
+          properties:
+            hash:
+              type: [string, "null"]
+            signature:
+              type: [string, "null"]
+
+    RegisterEntryCreateRequest:
+      type: object
+      required: [type, visibility]
+      properties:
+        type:
+          type: string
+        visibility:
+          type: string
+          enum: [public, member, confidential]
+        title:
+          type: [string, "null"]
+        summary:
+          type: [string, "null"]
+        references:
+          type: array
+          items:
+            type: object
+            required: [kind, ref]
+            properties:
+              kind:
+                type: string
+              ref:
+                type: string
+
+    RegisterEntryListResponse:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RegisterEntry'
+        nextCursor:
+          type: [string, "null"]
+
+# Root security: empty means endpoints are public unless overridden.
+security: []
+
+paths:
+  /health:
+    get:
+      tags: [system]
+      operationId: getHealth
+      summary: Health check
+      security: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /register/entries:
+    get:
+      tags: [register]
+      operationId: listRegisterEntries
+      summary: List register entries (public-facing view)
+      security: []
+      parameters:
+        - in: query
+          name: cursor
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 25
+          required: false
+      responses:
+        '200':
+          description: A page of register entries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterEntryListResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      tags: [register]
+      operationId: createRegisterEntry
+      summary: Create a register entry (privileged)
+      security:
+        - keycloakOidc: [openid]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterEntryCreateRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterEntry'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'

@@ -1,0 +1,14 @@
+apis:
+  ardtire:
+    root: openapi/ardtire-platform.openapi.yaml
+
+rules:
+  # We want strong rules, but allow localhost for local development server URLs.
+  no-server-example.com: off
+
+  # Keep security explicit, but allow public endpoints by defining root security: []
+  # We'll satisfy security-defined rule by defining security for each operation or at root.
+  security-defined: error
+
+  # Enforce license presence (we will add it).
+  info-license: error
