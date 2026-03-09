@@ -8,9 +8,9 @@ services:
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-ardtire}
       POSTGRES_USER: ${POSTGRES_USER:-ardtire}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ardtire_dev_password_change_me}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
     ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+      - "${POSTGRES_PORT:-5434}:5434"
     volumes:
       - ardtire_postgres_data:/var/lib/postgresql/data
     networks:

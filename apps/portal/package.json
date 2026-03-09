@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "HOST=127.0.0.1 PORT=3001 vinxi dev",
+    "dev": "pnpm -s routes:watch & PORT=3001 pnpm -s start",
     "build": "vite build",
     "start": "node .output/server/index.mjs",
     "preview": "vite preview",
