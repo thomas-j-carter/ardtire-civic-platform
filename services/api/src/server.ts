@@ -3,7 +3,7 @@ import { serve } from '@hono/node-server'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { verifyAccessToken } from './auth'
+import { verifyAccessToken } from './auth.js'
 import { listRegisterEntries, createRegisterEntry } from './register'
 
 const app = new Hono()
