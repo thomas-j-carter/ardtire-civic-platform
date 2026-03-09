@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "HOST=127.0.0.1 PORT=3002 vinxi dev",
-    "build": "vite build",
+    "dev": "pnpm -s routes:gen && vite dev --host 127.0.0.1 --port 3002 --strictPort",
+    "build": "pnpm -s routes:gen && vite build",
     "start": "node .output/server/index.mjs",
     "preview": "vite preview",
     "test": "vitest run",

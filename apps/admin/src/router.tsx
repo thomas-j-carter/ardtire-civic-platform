@@ -1,20 +1,12 @@
-import { createRouter as createTanStackRouter } from '@tanstack/solid-router'
+import { createRouter } from '@tanstack/solid-router'
 import { routeTree } from './routeTree.gen'
 
-export function getRouter() {
-  const router = createTanStackRouter({
-    routeTree,
+// Create a new router instance
+export const router = createRouter({ routeTree })
 
-    scrollRestoration: true,
-    defaultPreload: 'intent',
-    defaultPreloadStaleTime: 0,
-  })
-
-  return router
-}
-
+// Register router type for TS inference
 declare module '@tanstack/solid-router' {
   interface Register {
-    router: ReturnType<typeof getRouter>
+    router: typeof router
   }
 }
