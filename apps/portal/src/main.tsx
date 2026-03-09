@@ -1,3 +1,4 @@
+import './styles.css'
 /* eslint-disable */
 import { render } from 'solid-js/web'
 import { RouterProvider } from '@tanstack/solid-router'
