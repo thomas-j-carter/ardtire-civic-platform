@@ -4,7 +4,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { verifyAccessToken } from './auth.js'
-import { listRegisterEntries, createRegisterEntry } from './register'
+import { listRegisterEntries, createRegisterEntry } from './register.js'
 
 const app = new Hono()
 
