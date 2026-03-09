@@ -14,8 +14,14 @@ const OPENAPI_PATH = path.resolve(__dirname, '../../../openapi/ardtire-platform.
 const SESSION_COOKIE = 'ardtire_session'
 
 function cors(origin: string | null) {
-  // Dev allowlist for local frontends
-  const allowed = new Set(['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002'])
+  const raw =
+    process.env.CORS_ALLOWED_ORIGINS ?? 'http://localhost:3000,http://localhost:3001,http://localhost:3002'
+  const allowed = new Set(
+    raw
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean),
+  )
   if (!origin || !allowed.has(origin)) return null
   return origin
 }
