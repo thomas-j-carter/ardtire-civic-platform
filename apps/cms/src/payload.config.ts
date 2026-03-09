@@ -10,10 +10,10 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 export default buildConfig({
+  secret: process.env.PAYLOAD_SECRET ?? 'dev_payload_secret_change_me',
   serverURL: process.env.CMS_SERVER_URL ?? 'http://localhost:3003',
 
   // Auth will be introduced in Step 18C (dev Users first, then Keycloak OIDC).
-  // For now, we just compile the config and collections.
   collections,
   globals,
 
